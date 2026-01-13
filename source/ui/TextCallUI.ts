@@ -25,7 +25,7 @@ export class TextCallUI implements ICallUI{
     start(): void {
         let op = 1;
         while(op!=0){
-            op = Number(prompt('Escolha uma opção/n1- Cadastrar/n2- Listar/n3- Marcar como concluido/n0- Sair'));
+            op = Number(prompt('Escolha uma opção\n1- Cadastrar\n2- Listar\n3- Marcar como concluido\n0- Sair'));
             switch(op){
                 case 1:
                     let nome : string = prompt('Digite seu nome')!;
@@ -38,15 +38,62 @@ export class TextCallUI implements ICallUI{
                     }
                     break;
                 case 2:
+                    let chamados = this.callController.listarChamado();
+
+                if (chamados.length === 0) {
+                 alert("Nenhum chamado cadastrado.");
+             } else {
+               let mensagem = "Lista de chamados:\n\n";
+
+                chamados.forEach((chamado, index) => {
+                mensagem += `${index} - ${chamado.descricao}\n`;
+        });
+
+         alert(mensagem);
+    }
+
                     break;
-                case 3:
-                    break;
+            case 3:{
+                    let chamados = this.callController.listarChamado();
+                    let mensagem = "";
+
+    if (chamados.length === 0) {
+        alert ("Não há chamados para concluir.");
+    } else {
+        let lista = "Informe o índice do chamado:\n\n";
+
+        chamados.forEach((chamado, index) => {
+            lista += `${index} - ${chamado.descricao}\n`;
+        });
+
+        let indiceStr = prompt(lista);
+
+        if (indiceStr === null) {
+            alert ("Operação cancelada.");
+        } else {
+            let indice = Number(indiceStr);
+
+            if (isNaN(indice) || indice < 0 || indice >= chamados.length) {
+                mensagem = "Índice inválido.";
+            } else {
+                let sucesso = this.callController.marcarComoAtendido(chamados[indice]);
+               if (sucesso) {
+                 alert("Chamado concluído.");
+                } else {
+                alert("Erro ao concluir chamado.");
+                }
+            }
+        }
+    }
+
+             break;
+}
                 case 0:
+                    alert('Saindo do sistema...');
                     break;
                 default:
                     alert('Opcao Inválida');
             }
         }
     }
-
 }

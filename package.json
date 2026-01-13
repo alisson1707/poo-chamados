@@ -11,6 +11,7 @@
   "author": "Iallen Gábio",
   "license": "ISC",
   "devDependencies": {
+    "baseline-browser-mapping": "^2.9.14",
     "parcel": "^2.16.0",
     "typescript": "^5.9.3"
   }
